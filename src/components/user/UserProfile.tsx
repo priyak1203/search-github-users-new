@@ -1,6 +1,8 @@
 import { GET_USER } from '@/queries';
 import { UserData } from '@/types';
 import { useQuery } from '@apollo/client';
+import UserCard from './UserCard';
+import StatsContainer from './StatsContainer';
 
 type UserProfileProps = {
   userName: string;
@@ -17,11 +19,26 @@ function UserProfile({ userName }: UserProfileProps) {
 
   if (!data) return <h2 className="text-xl">User Not Found.</h2>;
 
-  const { bio } = data.user;
+  const {
+    avatarUrl,
+    bio,
+    name,
+    url,
+    repositories,
+    followers,
+    following,
+    gists,
+  } = data.user;
 
   return (
     <div>
-      <h1>{bio}</h1>
+      <UserCard avatarUrl={avatarUrl} bio={bio} name={name} url={url} />
+      <StatsContainer
+        totalRepos={repositories.totalCount}
+        followers={followers.totalCount}
+        following={following.totalCount}
+        gists={gists.totalCount}
+      />
     </div>
   );
 }
