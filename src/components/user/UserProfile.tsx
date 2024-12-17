@@ -6,6 +6,12 @@ import StatsContainer from './StatsContainer';
 import ForkedRepos from '../charts/ForkedRepos';
 import PopularRepos from '../charts/PopularRepos';
 import UsedLanguages from '../charts/UsedLanguages';
+import { Button } from '../ui/button';
+import { useState } from 'react';
+import UsedLanguagesPie from '../charts/UsedLanguagesPie';
+
+import PopularReposPie from '../charts/PopularReposPie';
+import ForkedReposPie from '../charts/ForkedReposPie';
 
 type UserProfileProps = {
   userName: string;
@@ -16,7 +22,7 @@ function UserProfile({ userName }: UserProfileProps) {
     variables: { login: userName },
   });
 
-  console.log(data);
+  const [pieChart, setPieChart] = useState(false);
 
   if (loading) return <div>Loading...</div>;
 
@@ -44,11 +50,26 @@ function UserProfile({ userName }: UserProfileProps) {
         following={following.totalCount}
         gists={gists.totalCount}
       />
-      {repositories.totalCount > 0 && (
+      <Button
+        className="text-center mb-10 flex border-0 text-xl"
+        variant="secondary"
+        onClick={() => setPieChart((value) => !value)}
+      >
+        {pieChart ? 'Bar Charts' : 'Pie Charts'}
+      </Button>
+
+      {repositories.totalCount > 0 && !pieChart && (
         <div className="grid md:grid-cols-2 gap-4">
           <UsedLanguages respositories={repositories.nodes} />
           <PopularRepos repositories={repositories.nodes} />
           <ForkedRepos repositories={repositories.nodes} />
+        </div>
+      )}
+      {repositories.totalCount > 0 && pieChart && (
+        <div className="grid md:grid-cols-2 gap-4">
+          <UsedLanguagesPie repositories={repositories.nodes} />
+          <PopularReposPie repositories={repositories.nodes} />
+          <ForkedReposPie repositories={repositories.nodes} />
         </div>
       )}
     </div>
