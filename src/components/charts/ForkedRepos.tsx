@@ -16,7 +16,7 @@ function ForkedRepos({ repositories }: { repositories: Repository[] }) {
   const chartConfig = {
     repo: {
       label: 'Repository',
-      color: '#facd12',
+      color: '#125427',
     },
   } satisfies ChartConfig;
 

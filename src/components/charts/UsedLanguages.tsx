@@ -18,7 +18,7 @@ function UsedLanguages({ respositories }: { respositories: Repository[] }) {
   const chartConfig = {
     language: {
       label: 'Language',
-      color: '#2563eb',
+      color: '#2563EB',
     },
   } satisfies ChartConfig;
 

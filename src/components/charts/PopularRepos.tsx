@@ -16,7 +16,7 @@ function PopularRepos({ repositories }: { repositories: Repository[] }) {
   const chartConfig = {
     repo: {
       label: 'Repository',
-      color: '#e11c47', // Red color for the bars
+      color: '#E21D48', // Red color for the bars
     },
   } satisfies ChartConfig;
 
