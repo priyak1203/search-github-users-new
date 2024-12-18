@@ -12,6 +12,7 @@ import UsedLanguagesPie from '../charts/UsedLanguagesPie';
 
 import PopularReposPie from '../charts/PopularReposPie';
 import ForkedReposPie from '../charts/ForkedReposPie';
+import Loading from './Loading';
 
 type UserProfileProps = {
   userName: string;
@@ -24,7 +25,7 @@ function UserProfile({ userName }: UserProfileProps) {
 
   const [pieChart, setPieChart] = useState(false);
 
-  if (loading) return <div>Loading...</div>;
+  if (loading) return <Loading />;
 
   if (error) return <h2 className="text-xl">{error.message}</h2>;
 
