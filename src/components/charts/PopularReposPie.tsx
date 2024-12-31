@@ -37,6 +37,21 @@ function PopularReposPie({ repositories }: { repositories: Repository[] }) {
     },
   } satisfies ChartConfig;
 
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    x,
+    y,
+    payload,
+    textAnchor,
+  }: any) => {
+    return (
+      <text cx={cx} cy={cy} x={x} y={y} textAnchor={textAnchor} fill="#E21D48">
+        {payload.stars}
+      </text>
+    );
+  };
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
@@ -52,7 +67,13 @@ function PopularReposPie({ repositories }: { repositories: Repository[] }) {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Pie data={chartData} dataKey="stars" nameKey="repo" />
+            <Pie
+              data={chartData}
+              dataKey="stars"
+              nameKey="repo"
+              labelLine={false}
+              label={renderCustomizedLabel}
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>
