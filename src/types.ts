@@ -39,3 +39,11 @@ export type User = {
 export type UserData = {
   user: User;
 };
+
+export type ChartData = {
+  fill: string;
+  language?: string;
+  repo?: string;
+  count?: number;
+  stars?: number;
+};
