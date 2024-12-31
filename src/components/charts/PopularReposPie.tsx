@@ -37,17 +37,29 @@ function PopularReposPie({ repositories }: { repositories: Repository[] }) {
     },
   } satisfies ChartConfig;
 
+  // Percentage label
+  const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,
     cy,
-    x,
-    y,
-    payload,
-    textAnchor,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
   }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
     return (
-      <text cx={cx} cy={cy} x={x} y={y} textAnchor={textAnchor} fill="#E21D48">
-        {payload.stars}
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
       </text>
     );
   };

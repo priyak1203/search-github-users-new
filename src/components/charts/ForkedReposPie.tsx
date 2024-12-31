@@ -32,6 +32,33 @@ function ForkedReposPie({ repositories }: { repositories: Repository[] }) {
     },
   };
 
+  // Percentage label
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({
+    cx,
+    cy,
+    midAngle,
+    innerRadius,
+    outerRadius,
+    percent,
+  }: any) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+
+    return (
+      <text
+        x={x}
+        y={y}
+        fill="white"
+        textAnchor={x > cx ? 'start' : 'end'}
+        dominantBaseline="central"
+      >
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
   return (
     <Card className="flex flex-col">
       <CardHeader className="items-center pb-0">
@@ -47,7 +74,13 @@ function ForkedReposPie({ repositories }: { repositories: Repository[] }) {
               cursor={false}
               content={<ChartTooltipContent hideLabel />}
             />
-            <Pie data={chartData} dataKey="count" nameKey="repo" />
+            <Pie
+              data={chartData}
+              dataKey="count"
+              nameKey="repo"
+              labelLine={false}
+              label={renderCustomizedLabel}
+            />
           </PieChart>
         </ChartContainer>
       </CardContent>
