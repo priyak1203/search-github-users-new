@@ -100,3 +100,51 @@ export const calculatePopularLanguages = (
     .slice(0, 5)
     .map(([language, count]) => ({ language, count }));
 };
+
+/**
+ * Calculates the top 5 most starred programming languages across all repositories
+ * @param repos Array of repository data from Github API
+ * @returns Array of objects containing language names and their stars count
+ * Example return : [{language: "JavaScript", stars: 10}, {language: "Python", stars:7}]
+ */
+
+export const calculateStarsPerLanguage = (
+  repos: Repository[]
+): { language: string; stars: number }[] => {
+  // Return empty array if no repositories are provided
+  if (repos.length === 0) {
+    return [];
+  }
+
+  // Initialize a map to track how many stars for each language
+  // Example: {"JavaScript": 5, "Python": 3, "TypeScript": 2}
+
+  const languageMap: { [key: string]: number } = {};
+
+  repos.forEach((repo) => {
+    // Skip repositories with no languages
+    if (repo.languages.edges.length === 0) {
+      return;
+    }
+    const { stargazerCount } = repo;
+
+    // Iterate through each language in the repository
+    // languages.edges comes from Github's GraphQL API structure
+    repo.languages.edges.forEach((language) => {
+      const { name } = language.node;
+      // Increment the count for this language, initialize to 1 if it's the first occurence
+      languageMap[name] = (languageMap[name] || 0) + stargazerCount;
+    });
+  });
+
+  // If no languages were found in any repository, return empty array
+  if (Object.keys(languageMap).length === 0) {
+    return [];
+  }
+
+  // Convert the language map into an array of objects and sort them
+  return Object.entries(languageMap)
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([language, stars]) => ({ language, stars }));
+};

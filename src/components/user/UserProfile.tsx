@@ -13,6 +13,8 @@ import UsedLanguagesPie from '../charts/UsedLanguagesPie';
 import PopularReposPie from '../charts/PopularReposPie';
 import ForkedReposPie from '../charts/ForkedReposPie';
 import Loading from './Loading';
+import PopularLanguages from '../charts/PopularLanguages';
+import PopularLanguagesPie from '../charts/PopularLanguagesPie';
 
 type UserProfileProps = {
   userName: string;
@@ -64,6 +66,7 @@ function UserProfile({ userName }: UserProfileProps) {
           <UsedLanguages respositories={repositories.nodes} />
           <PopularRepos repositories={repositories.nodes} />
           <ForkedRepos repositories={repositories.nodes} />
+          <PopularLanguages repositories={repositories.nodes} />
         </div>
       )}
       {repositories.totalCount > 0 && pieChart && (
@@ -71,6 +74,7 @@ function UserProfile({ userName }: UserProfileProps) {
           <UsedLanguagesPie repositories={repositories.nodes} />
           <PopularReposPie repositories={repositories.nodes} />
           <ForkedReposPie repositories={repositories.nodes} />
+          <PopularLanguagesPie repositories={repositories.nodes} />
         </div>
       )}
     </div>
